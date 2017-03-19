@@ -19,3 +19,15 @@ func TestXor(t *testing.T) {
 		t.Errorf("got: %s, expected: %s", got.String(), expected.String())
 	}
 }
+
+func TestBucketIndex(t *testing.T) {
+	a := NodeID{}
+	maxBucketID := IDLen*8 - 1
+	if a.BucketIndex() != maxBucketID {
+		t.Errorf("Got: %d Expected %d", a.BucketIndex(), maxBucketID)
+	}
+	b := NodeID{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	if b.BucketIndex() != 7 {
+		t.Errorf("Got: %d Expected %d", b.BucketIndex(), 7)
+	}
+}

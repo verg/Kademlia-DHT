@@ -36,6 +36,18 @@ func (n NodeID) Xor(other NodeID) (res NodeID) {
 	return res
 }
 
+// Determined by number of leading zeros
+func (n NodeID) BucketIndex() (bucket int) {
+	for i, b := range n {
+		for j := 0; j < 8; j++ {
+			if (b>>uint8(7-j))&0x1 != 0 {
+				return i*8 + j
+			}
+		}
+	}
+	return IDLen*8 - 1
+}
+
 func (n NodeID) String() string {
 	return hex.EncodeToString(n[:])
 }
