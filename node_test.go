@@ -20,6 +20,28 @@ func TestXor(t *testing.T) {
 	}
 }
 
+func TestLess(t *testing.T) {
+	smallest := NodeID{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}
+	middle := NodeID{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20}
+	largest := NodeID{1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 17}
+	if smallest.Less(smallest) {
+		t.Error("Same NodeID should not be less than self")
+	}
+	if !smallest.Less(middle) {
+		t.Error("smallest should be Less than middle")
+	}
+	if middle.Less(smallest) {
+		t.Error("Middle should not be Less than smallest")
+	}
+
+	if !smallest.Less(largest) {
+		t.Error("smallest should be Less than largest")
+	}
+	if largest.Less(smallest) {
+		t.Error("Largest should not be Less than smallest")
+	}
+}
+
 func TestBucketIndex(t *testing.T) {
 	a := NodeID{}
 	maxBucketID := IDLen*8 - 1

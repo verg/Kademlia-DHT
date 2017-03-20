@@ -48,6 +48,15 @@ func (n NodeID) BucketIndex() (bucket int) {
 	return IDLen*8 - 1
 }
 
+func (n NodeID) Less(other interface{}) bool {
+	for i, b := range n {
+		if b != other.(NodeID)[i] {
+			return b < other.(NodeID)[i]
+		}
+	}
+	return false
+}
+
 func (n NodeID) String() string {
 	return hex.EncodeToString(n[:])
 }
