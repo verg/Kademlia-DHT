@@ -41,6 +41,7 @@ func (n NodeID) Xor(other NodeID) (res NodeID) {
 }
 
 // Returns the index of the target node. Determined by the number of leading 0s.
+// Can be commputed from either node since Xor is communicative.
 func (n NodeID) BucketIndex(target NodeID) (bucket int) {
 	distance := n.Xor(target)
 	for i, b := range distance {
