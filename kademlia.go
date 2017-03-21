@@ -58,5 +58,6 @@ func (k *Kademlia) HandleRPC(request *RPCHeader, resp *RPCHeader) error {
 	}
 
 	k.table.Update(request.Sender)
+	resp.Sender = k.table.self
 	return nil
 }

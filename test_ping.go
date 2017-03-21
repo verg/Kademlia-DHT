@@ -17,7 +17,8 @@ func TestPing(t *testing.T) {
 }
 
 func BuildContactWithAddr(addr string) Contact {
-	c := BuildContact()
-	c.Addr = addr
-	return c
+	return Contact{
+		ID:   NewRandomNodeID(),
+		Addr: addr,
+	}
 }
