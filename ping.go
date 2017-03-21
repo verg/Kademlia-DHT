@@ -16,6 +16,7 @@ func (k *Kademlia) NewPingReply() *PingReply {
 	return &PingReply{}
 }
 
+// Makes Ping RPC Call
 func (k *Kademlia) Ping(recipient Contact) error {
 	client, err := k.Dial(recipient)
 	if err != nil {
@@ -24,6 +25,7 @@ func (k *Kademlia) Ping(recipient Contact) error {
 	return client.Call("KademliaRPC.PingRPC", k.NewPingArgs(), k.NewPingReply())
 }
 
+// Handles Ping RPC Call
 func (k *Kademlia) PingRPC(req *PingArgs, res *PingReply) {
 	k.HandleRPC(&req.RPCHeader, &req.RPCHeader)
 }
