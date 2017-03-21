@@ -1,14 +1,11 @@
 package kademlia
 
-import "net"
-
 type Contact struct {
 	ID   NodeID
-	Addr net.IP
-	Port uint16
+	Addr string
 }
 
-func NewContact(id NodeID, addr net.IP) Contact {
+func NewContact(id NodeID, addr string) Contact {
 	return Contact{
 		ID:   id,
 		Addr: addr,
