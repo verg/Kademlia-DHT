@@ -3,6 +3,7 @@ package kademlia
 import (
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"math/rand"
 )
 
@@ -15,6 +16,9 @@ func NewNodeID(h string) (res NodeID, e error) {
 	id, err := hex.DecodeString(h)
 	if err != nil {
 		return res, errors.New("Error decoding hex-encoded ID")
+	}
+	if len(id) > IDLen {
+		return res, errors.New(fmt.Sprintf("ID longer than %d bytes", IDLen))
 	}
 	for i, b := range id {
 		res[i] = b
@@ -36,9 +40,10 @@ func (n NodeID) Xor(other NodeID) (res NodeID) {
 	return res
 }
 
-// Determined by number of leading zeros
-func (n NodeID) BucketIndex() (bucket int) {
-	for i, b := range n {
+// Returns the index of the target node. Determined by the number of leading 0s.
+func (n NodeID) BucketIndex(target NodeID) (bucket int) {
+	distance := n.Xor(target)
+	for i, b := range distance {
 		for j := 0; j < 8; j++ {
 			if (b>>uint8(7-j))&0x1 != 0 {
 				return i*8 + j

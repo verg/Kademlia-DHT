@@ -44,12 +44,15 @@ func TestLess(t *testing.T) {
 
 func TestBucketIndex(t *testing.T) {
 	a := NodeID{}
+	b := NodeID{}
 	maxBucketID := IDLen*8 - 1
-	if a.BucketIndex() != maxBucketID {
-		t.Errorf("Got: %d Expected %d", a.BucketIndex(), maxBucketID)
+	got := a.BucketIndex(b)
+	if got != maxBucketID {
+		t.Errorf("Got: %d Expected %d", got, maxBucketID)
 	}
-	b := NodeID{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	if b.BucketIndex() != 7 {
-		t.Errorf("Got: %d Expected %d", b.BucketIndex(), 7)
+	c := NodeID{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	got = c.BucketIndex(a)
+	if got != 7 {
+		t.Errorf("Got: %d Expected %d", got, 7)
 	}
 }
