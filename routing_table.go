@@ -36,8 +36,8 @@ func (rt *RoutingTable) FindClosest(target NodeID, n int) (contacts []Contact) {
 		rt.appendContactsFromBucket(i, &contacts)
 	}
 
-	contacts = contacts[:n]       // remove any extra contacts
-	sort.Sort(Contacts(contacts)) // sort by distance so closestNode is a front
+	contacts = contacts[:n] // remove any extra contacts
+	sort.Sort(Contacts(contacts))
 	return contacts
 }
 

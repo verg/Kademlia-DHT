@@ -26,6 +26,6 @@ func (k *Kademlia) Ping(recipient Contact) error {
 }
 
 // Handles Ping RPC Call
-func (k *Kademlia) PingRPC(req *PingArgs, res *PingReply) {
-	k.HandleRPC(&req.RPCHeader, &req.RPCHeader)
+func (k *Kademlia) PingRPC(req *PingArgs, resp *PingReply) {
+	k.HandleRPC(&req.RPCHeader, &resp.RPCHeader)
 }

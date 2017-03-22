@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"net/rpc"
+	"time"
 )
 
 type RPCIdentifier [IDLen]byte
@@ -46,8 +47,11 @@ func (k *Kademlia) Serve() error {
 }
 
 func (k *Kademlia) Dial(contact Contact) (*rpc.Client, error) {
-	client, err := rpc.DialHTTP("tcp", contact.Addr)
-	return client, err
+	conn, err := net.DialTimeout("tcp", contact.Addr, 4*time.Second)
+	if err != nil {
+		return nil, err
+	}
+	return rpc.NewClient(conn), nil
 }
 
 func (k *Kademlia) HandleRPC(request *RPCHeader, resp *RPCHeader) error {
