@@ -7,12 +7,17 @@ import (
 	"net/http"
 	"net/rpc"
 	"time"
+
+	database "github.com/syndtr/goleveldb/leveldb"
 )
+
+const DB_Path = "db/"
 
 type RPCIdentifier [IDLen]byte
 
 type Kademlia struct {
 	table *RoutingTable
+	db    *database.DB
 }
 
 type KademliaRPC struct {
@@ -25,7 +30,11 @@ type RPCHeader struct {
 }
 
 func NewKademlia(self Contact) *Kademlia {
-	return &Kademlia{table: NewRoutingTable(self)}
+	conn, err := database.OpenFile(DB_Path+self.String(), nil)
+	if err != nil {
+		panic("Failed to open db conn")
+	}
+	return &Kademlia{table: NewRoutingTable(self), db: conn}
 }
 
 func (k *Kademlia) NewRPCHeaderWithID() RPCHeader {

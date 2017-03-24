@@ -30,11 +30,11 @@ func NewRandomNodeID() (res NodeID) {
 	return NodeID(IDLenRandBytes())
 }
 
-func IDLenRandBytes() (b [IDLen]byte) {
-	for i := range b {
-		b[i] = byte(rand.Intn(256))
+func IDLenRandBytes() (res [IDLen]byte) {
+	for i := range res {
+		res[i] = byte(rand.Intn(256))
 	}
-	return b
+	return res
 }
 
 func (n NodeID) Xor(other NodeID) (res NodeID) {
